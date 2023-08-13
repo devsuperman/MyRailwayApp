@@ -7,9 +7,6 @@ builder.Services.AddDbContext<Contexto>(options =>
 
 builder.Services.AddControllersWithViews();
 
-var port = Environment.GetEnvironmentVariable("PORT");
-builder.WebHost.UseUrls($"https://0.0.0.0:{port}");
-
 var app = builder.Build();
 
 var scope = app.Services.CreateScope();

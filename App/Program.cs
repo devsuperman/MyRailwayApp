@@ -7,6 +7,16 @@ builder.Services.AddDbContext<Contexto>(options =>
 
 builder.Services.AddControllersWithViews();
 
+var portVar = Environment.GetEnvironmentVariable("PORT");
+
+if (portVar is { Length: > 0 } && int.TryParse(portVar, out int port))
+{
+    builder.WebHost.ConfigureKestrel(options =>
+    {
+        options.ListenAnyIP(port);
+    });
+}
+
 var app = builder.Build();
 
 var scope = app.Services.CreateScope();

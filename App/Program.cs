@@ -1,4 +1,4 @@
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions { ContentRootPath = AppContext.BaseDirectory });
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

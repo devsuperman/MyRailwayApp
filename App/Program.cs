@@ -1,31 +1,15 @@
-using Microsoft.EntityFrameworkCore;
-
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<Contexto>(options =>
-    options.UseNpgsql(ConnectionHelper.GetConnectionString(builder.Configuration)));
-
+// Add services to the container.
 builder.Services.AddControllersWithViews();
-
-var portVar = Environment.GetEnvironmentVariable("PORT");
-
-if (portVar is { Length: > 0 } && int.TryParse(portVar, out int port))
-{
-    builder.WebHost.ConfigureKestrel(options =>
-    {
-        options.ListenAnyIP(port);
-    });
-}
 
 var app = builder.Build();
 
-var scope = app.Services.CreateScope();
-await DataHelper.ManageDataAsync(scope.ServiceProvider);
-
-
+// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
